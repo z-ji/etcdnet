@@ -527,7 +527,7 @@ namespace EtcdNet
             if (!key.StartsWith("/"))
                 throw new ArgumentException("The value of `key` must start with `/`.");
 
-            string url = string.Format(CultureInfo.InvariantCulture, "/v2/keys{0}?prevValue={1}", key, prevIndex);
+            string url = string.Format(CultureInfo.InvariantCulture, "/v2/keys{0}?prevIndex={1}", key, prevIndex);
             return SendRequest(HttpMethod.Delete, url);
         }
 
@@ -578,10 +578,8 @@ namespace EtcdNet
                 }
                 catch (HttpRequestException hrex)
                 {
-                    // server closed connection
-                    WebException webException = hrex.InnerException as WebException;
-                    if (webException == null || webException.Status != WebExceptionStatus.ConnectionClosed)
-                        throw;
+                   
+                   
                 }
             }
 
