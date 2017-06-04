@@ -106,6 +106,16 @@ namespace EtcdNet.Sample
             /////////////////////////////////////////////////////////////
             key = "/my/cas-test";
             value = Guid.NewGuid().ToString();
+
+            try
+            {
+                 resp = await etcdClient.DeleteNodeAsync(key);
+            }
+            catch (EtcdCommonException.KeyNotFound)
+            { // key does not exist
+                Console.WriteLine("Key `{0}` does not exist", key);
+               
+            }
             try {
                 resp = await etcdClient.CreateNodeAsync(key, value, null, dir : false);
                 Console.WriteLine("Key `{0}` is created with value {1}", key, value);
@@ -121,6 +131,7 @@ namespace EtcdNet.Sample
                 Console.WriteLine("Key `{0}` is updated to `{1}`", key, resp.Node.Value);
 
                 prevIndex = resp.Node.ModifiedIndex;
+                Console.WriteLine("prevIndex "+ prevIndex);
             }
             catch (EtcdCommonException.KeyNotFound) {
                 Console.WriteLine("Key `{0}` does not exists", key);
@@ -132,6 +143,8 @@ namespace EtcdNet.Sample
             try {
                 resp = await etcdClient.CompareAndSwapNodeAsync(key, prevIndex, "new value2");
                 Console.WriteLine("Key `{0}` is updated to `{1}`", key, resp.Node.Value);
+                prevIndex = resp.Node.ModifiedIndex;
+                Console.WriteLine("prevIndex "+ prevIndex);
             }
             catch (EtcdCommonException.KeyNotFound) {
                 Console.WriteLine("Key `{0}` does not exists", key);
@@ -143,7 +156,7 @@ namespace EtcdNet.Sample
 
 
             try {
-                resp = await etcdClient.CompareAndDeleteNodeAsync(key, prevIndex+1);
+                resp = await etcdClient.CompareAndDeleteNodeAsync(key, prevIndex);
                 Console.WriteLine("Key `{0}` is deleted", key);
             }
             catch (EtcdCommonException.KeyNotFound) {
