@@ -8,6 +8,15 @@
     <RootNamespace>EtcdNet</RootNamespace>
     <AssemblyName>EtcdNet</AssemblyName>
     <TargetFramework>netstandard1.6</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Zefei Ji</Authors>
+    <Company />
+    <Product>EtcdNet.Core</Product>
+    <Description>.NET client library to access etcd. Supports auth / cluster / asyc. Targeting dotnet core.</Description>
+    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/z-ji/etcdnet</PackageProjectUrl>
+    <RepositoryUrl />
+    <PackageId>zji.etcdnet.core</PackageId>
   </PropertyGroup>
  
   <ItemGroup>
